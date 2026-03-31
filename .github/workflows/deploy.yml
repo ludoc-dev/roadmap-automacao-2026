@@ -30,10 +30,17 @@ jobs:
       env:
         CI: true
 
+    - name: Copy PWA build to repo root
+      run: |
+        # Copy the contents of pwa/dist to the repository root
+        cp -r roadmap-automacao-2026/pwa/dist/* .
+      env:
+        CI: true
+
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./pwa/dist # Corrected path relative to repo root
+        publish_dir: . # Publish from the repository root after copying
         # Optional: Add custom domain if needed
         # cname: your.domain.com
