@@ -19,11 +19,14 @@ jobs:
       with:
         node-version: '20' # Specify your Node.js version
 
-    - name: Install dependencies and build PWA
+    - name: Install dependencies and Build PWA
       run: |
         cd roadmap-automacao-2026/pwa
         npm install
         npm run build
+        # Verify build output
+        if [ ! -d "dist" ]; then echo "Build failed: 'dist' directory not found." && exit 1; fi
+        if [ -z "$(ls -A dist)" ]; then echo "Build failed: 'dist' directory is empty." && exit 1; fi
       env:
         CI: true
 
@@ -34,4 +37,3 @@ jobs:
         publish_dir: ./roadmap-automacao-2026/pwa/dist # Directory containing the built PWA
         # Optional: Add custom domain if needed
         # cname: your.domain.com
-
